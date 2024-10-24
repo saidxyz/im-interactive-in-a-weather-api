@@ -1,0 +1,120 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#map-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+#mapid {
+    height: 100%;
+    width: 100%;
+}
+
+#vaer-informasjon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    max-width: 200px;
+    font-family: Arial, sans-serif;
+}
+
+#vaer-informasjon h2 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+}
+
+#vaer-informasjon p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+
+#sted-informasjon {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #e0f7fa;
+    border: 1px solid #006064;
+    border-radius: 5px;
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+    pointer-events: none;
+}
+
+#sted-informasjon * {
+    pointer-events: auto;
+}
+
+#sted-informasjon h2 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+}
+
+#sted-informasjon p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+#sted-informasjon #lukk-knapp {
+    margin-top: 10px;
+}
+
+@keyframes move-figure {
+    0% { transform: translateY(-10px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY-(-10px); }
+}
+
+#min-figur {
+    animation: move-figure 0.5s ease-in-out infinite;
+}
+#weather-details {
+    margin-top: 20px;
+    font-size: 1.2em;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 300px;
+}
+
+#weather-details p {
+    margin: 5px 0;
+}
+
+#forecast {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.forecast-day {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    width: 120px;
+    background-color: #f9f9f9;
+}
+
+.forecast-day img {
+    display: block;
+    margin: 0 auto;
+}
+
+.forecast-day p {
+    margin: 5px 0;
+}
