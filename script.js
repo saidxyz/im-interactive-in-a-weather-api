@@ -29,7 +29,7 @@ myTimeout = 0;
 // Når figuren beveger seg
 figurMarker.on('move', function(e) {
     var posisjon = e.target.getLatLng();
-    console.log('Icon moved to:', posisjon.lat, posisjon.lng);
+    //console.log('Icon moved to:', posisjon.lat, posisjon.lng);
     clearTimeout(myTimeout);
     myTimeout = setTimeout(function() {hentVaerData(posisjon.lat, posisjon.lng)}, 500);
         sjekkNærhet();
@@ -68,29 +68,34 @@ dropSound.play().catch(function(error) {
 // Legg til markører for Oslo, Narvik og Tromsø
 var steder = [
     {
-        navn: 'Oslo',
-        koordinater: [59.9139, 10.7522],
-        beskrivelse: 'I Oslo fullførte jeg videregående skole og begynte på universitetet.'
-    },
-    {
         navn: 'Narvik',
         koordinater: [68.4385, 17.4272],
-        beskrivelse: 'I Narvik tilbrakte jeg en del av barndommen min.'
+        beskrivelse: 'Narvik er der jeg befinner meg nå, hvor jeg studerer datateknikk ved UiT. Jeg har tilbrakt de siste årene her mens jeg fullfører graden min, og byen har blitt en viktig del av livet mitt. Det er her jeg har jobbet med flere prosjekter som virkelig har formet meg som utvikler, og hvor jeg vil fullføre bachelorgraden våren 2025 og her jeg fant livs partneren min her.',
+        bilde: './Images/narvik.png',
     },
     {
-        navn: 'Tromsø',
-        koordinater: [69.6492, 18.9553],
-        beskrivelse: 'Tromsø er et sted som har hatt en spesiell plass i livet mitt. Jeg bodde her som liten før familien min flyttet tilbake til Oslo.'
+        navn: 'Oslo',
+        koordinater: [59.9139, 10.7522],
+        beskrivelse: 'Det var her jeg og familien min først kom til Norge, og det er også her jeg har bodd store deler av livet.',
+        bilde: './Images/oslo.png'
     },
     {
         navn: 'Vestby',
         koordinater: [59.60511, 10.75233],
-        beskrivelse: 'I Tromsø utviklet jeg min interesse for teknologi fra ung alder.'
+        beskrivelse: 'Vestby er hvor jeg gikk på videregående. Det var en kort, men viktig periode i livet mitt, hvor jeg fikk utvide horisontene mine, både akademisk og personlig. Det var her jeg utviklet meg sosialt og lærte å takle nye utfordringer, noe som har formet meg til den jeg er i dag.',
+        bilde: './Images/vestby.png',
     },
     {
-        navn: 'Vestby',
+        navn: 'Askim',
         koordinater: [59.58290, 11.16490],
-        beskrivelse: 'I Tromsø utviklet jeg min interesse for teknologi fra ung alder.'
+        beskrivelse: 'Askim var hjemmet mitt gjennom ungdomsårene, og det var her jeg virkelig fant lidenskapene mine for både teknologi og sport. Når jeg ikke satt ved PC-en og lærte meg mer om teknologi, tilbrakte jeg tiden på boksetrening. Jeg var aktiv innen boksing, deltok i flere kamper og reiste rundt med treneren min. Det var en periode som lærte meg mye om disiplin, dedikasjon og hardt arbeid – egenskaper jeg har tatt med meg videre i både studier og livet generelt.',
+        bilde: './Images/boksing.png',
+    },
+    {
+        navn: 'Tromsø',
+        koordinater: [69.6522951010538, 19.050317685769475],
+        beskrivelse: 'Barneskolen min var tilbrakt her i Nord-Norge i Tromsdalen. Her gikk jeg på barneskolen, spilte fotball,  spilte teater og hadde mange gode venner som bodde i nabolaget.',
+        bilde: './Images/tromsø.png',
     },
 ];
 
@@ -129,16 +134,41 @@ function sjekkNærhet() {
     }
 }
 
+// Define unique colors for each location
+const stedFarger = {
+    'Narvik': '#FFCCE5',
+    'Oslo': '#FFCCCC',
+    'Vestby': '#CCFFCC',
+    'Askim': '#FFF5CC',
+    'Tromsø': '#CCE5FF'
+};
+
+// Add icons for interests or activities
+const stedIkoner = {
+    'Narvik': '❤️📘', // Study icon
+    'Oslo': '🏠',   // Home icon
+    'Vestby': '🏫', // School icon
+    'Askim': '🥊',  // Sports icon (boxing)
+    'Tromsø': '⚽'  // Soccer icon
+};
+
 // Funksjon for å vise stedsinformasjon
 function visStedInformasjon(sted) {
     // Vis informasjonen i `sted-informasjon`-diven
     const infoDiv = document.getElementById('sted-informasjon');
+
+    // Apply the unique color for each location
+    infoDiv.style.backgroundColor = stedFarger[sted.navn] || '#FFFFFF'; // Default to white if color not defined
+
     infoDiv.innerHTML = `
-        <h2>${sted.navn}</h2>
-        <p>${sted.beskrivelse}</p>
+        <h2>${stedIkoner[sted.navn] || ''} ${sted.navn}</h2>
+        <img src="${sted.bilde}" alt="${sted.navn}" style="width: 100%; max-height: 100%; object-fit: cover; margin-bottom: 10px;">
+        <p style="font-size: 25px; font-weight: bold;">${sted.beskrivelse}</p>
         <button id="lukk-knapp">Lukk</button>
+        <a href="https://www.google.com/maps/search/?api=1&query=${sted.koordinater[0]},${sted.koordinater[1]}" target="_blank"> Åpne i Google Maps</a>
     `;
-    infoDiv.style.display = 'block';
+
+    infoDiv.style.display = 'table';
 
     document.getElementById('lukk-knapp').addEventListener('click', function() {
         infoDiv.style.display = 'none';
