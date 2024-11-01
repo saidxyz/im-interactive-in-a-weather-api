@@ -25,12 +25,13 @@ var figurIcon = L.icon({
 
 // Legg til figuren som en drabar marker
 var figurMarker = L.marker([65, 13], {icon: figurIcon, draggable: true}).addTo(mymap);
-
+myTimeout = 0;
 // Når figuren beveger seg
 figurMarker.on('move', function(e) {
     var posisjon = e.target.getLatLng();
     console.log('Icon moved to:', posisjon.lat, posisjon.lng);
-    hentVaerData(posisjon.lat, posisjon.lng);
+    clearTimeout(myTimeout);
+    myTimeout = setTimeout(function() {hentVaerData(posisjon.lat, posisjon.lng)}, 500);
         sjekkNærhet();
 });
 
@@ -112,7 +113,6 @@ function sjekkNærhet() {
     steder.forEach(function(sted) {
         var stedPosisjon = L.latLng(sted.koordinater);
         var avstand = figurPosisjon.distanceTo(stedPosisjon);
-
         if (avstand < 10000) { // Terskel i meter
             stedFunnet = true;
             if (sistVisteSted !== sted.navn) {
